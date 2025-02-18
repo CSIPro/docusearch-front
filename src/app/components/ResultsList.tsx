@@ -10,17 +10,17 @@ interface ResultsListProps {
 }
 
 const highlightTerms = (text: string, query: string) => {
-  if (!text || !query) return text; // Return original text if invalid input
+  if (!text || !query) return text;
 
-  const terms = query.split(" ").filter(Boolean); // Split query into words and filter out empty terms
-  const regex = new RegExp(`(${terms.join("|")})`, "gi"); // Build regex for all terms
-  const parts = text.split(regex); // Split the text using the regex
+  const terms = query.split(" ").filter(Boolean);
+  const regex = new RegExp(`(${terms.join("|")})`, "gi");
+  const parts = text.split(regex);
 
   return (
     <>
       {parts.map((part, index) =>
         terms.some((term) => part.toLowerCase() === term.toLowerCase()) ? (
-          <mark key={index} className="bg-yellow-200">{part}</mark>
+          <mark key={index} className="bg-yellow-300 px-1 rounded">{part}</mark>
         ) : (
           part
         )
@@ -29,37 +29,43 @@ const highlightTerms = (text: string, query: string) => {
   );
 };
 
-
 const ResultsList: React.FC<ResultsListProps> = ({ results, searchQuery }) => {
-  // Split the search query into individual terms
-  const terms = searchQuery.split(" ").filter((term) => term);
-
-  console.log("Search Query:", searchQuery);
-  console.log("Results Length:", results.length);
-
   if (!results || !results.length) {
-    console.log("No results found");
-    return <p>No results found.</p>;
+    return (
+      <p className="text-gray-600 text-center mt-4">
+        No results found for "<span className="font-semibold">{searchQuery}</span>".
+      </p>
+    );
   }
 
   return (
-    <ul className="grid grid-cols-1 gap-4">
-    {results.map((result) => (
-      <li key={result.file_name} className="p-4 border rounded shadow hover:shadow-lg">
-        <h2 className="font-bold text-lg">{result.file_name}</h2>
-        <p className="text-sm text-gray-600">
-          {highlightTerms(result.snippet, searchQuery)}...
-        </p>
-        <a
-          href={`http://127.0.0.1:8000/download/${result.file_name}`}
-          download
-          className="text-blue-500 hover:text-blue-600 underline"
+    <div className="w-full max-w-4xl">
+      {results.map((result, index) => (
+        <div
+          key={`${result.file_name}-${index}`}
+          className="p-5 bg-white shadow-md rounded-xl border border-gray-200 hover:shadow-lg transition-all mb-4"
         >
-          Download
-        </a>
-      </li>
-    ))}
-  </ul>
+          {/* File Name */}
+          <h2 className="font-semibold text-lg text-gray-900">{result.file_name}</h2>
+
+          {/* Snippet */}
+          <p className="text-gray-700 text-sm mt-2 leading-relaxed">
+            {highlightTerms(result.snippet, searchQuery)}...
+          </p>
+
+          {/* Download Link */}
+          <div className="mt-3">
+            <a
+              href={`http://127.0.0.1:8000/download/${result.file_name}`}
+              download
+              className="text-blue-600 hover:text-blue-700 font-medium transition-all"
+            >
+              ⬇ Download PDF
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 
