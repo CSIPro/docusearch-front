@@ -24,6 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="Search for PDFs"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         className="p-4 border rounded-full shadow focus:outline-none focus:ring-2 focus:ring-blue-500 w-full max-w-xl text-lg"
       />
 
