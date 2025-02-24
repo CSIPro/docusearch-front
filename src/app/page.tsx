@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import Pagination from "./components/Pagination";
-export const BASE_URL = "http://"//IP address of the server
+export const BASE_URL = "http://127.0.0.1:8000"; //IP address of the server
 export default function Page() {
   const [isClient, setIsClient] = useState(false); // ✅ Track client readiness
   const [results, setResults] = useState<any[]>([]);
@@ -64,7 +64,7 @@ export default function Page() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       {/* Search Bar Section */}
       <div className="w-full max-w-3xl text-center flex items-center justify-center">
-        <img src="/unisonlogo.png" alt="Logo" className="h-36 mb-8 mr-4" />
+        <img src="/unisonlogo.gif" alt="Logo" className="h-36 mb-8 mr-4" />
         <h1 
           onClick={resetSearch} 
           className="text-7xl font-extrabold bg-gradient-to-r from-red-600 via-yellow-400 to-blue-800 bg-clip-text text-transparent mb-6 cursor-pointer transition-all hover:opacity-80"
