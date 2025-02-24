@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import Pagination from "./components/Pagination";
-
+export const BASE_URL = "http://"//IP address of the server
 export default function Page() {
   const [isClient, setIsClient] = useState(false); // ✅ Track client readiness
   const [results, setResults] = useState<any[]>([]);
@@ -17,7 +17,7 @@ export default function Page() {
   const [exactMatch, setExactMatch] = useState<boolean>(false);
 
   const latestRequestTimestamp = useRef<number>(0);
-
+  
   useEffect(() => {
     setIsClient(true); // ✅ Set to true when component is mounted
   }, []);
@@ -29,7 +29,7 @@ export default function Page() {
     latestRequestTimestamp.current = currentTimestamp;
 
     try {
-      const response = await axios.get("http://10.10.130.243:8000/search", {
+      const response = await axios.get(`${BASE_URL}/search`, {
         params: { query, exact_match: exactMatch, start_date: startDate || undefined, end_date: endDate || undefined, page, page_size: 10 },
       });
       const data = response.data as { results: any[]; total_results: number };
