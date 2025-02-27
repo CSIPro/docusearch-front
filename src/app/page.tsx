@@ -5,7 +5,9 @@ import axios from "axios";
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import Pagination from "./components/Pagination";
-export const BASE_URL = "http://127.0.0.1:8000"; //IP address of the server
+
+export const BASE_URL = process.env.PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
+
 export default function Page() {
   const [isClient, setIsClient] = useState(false); // ✅ Track client readiness
   const [results, setResults] = useState<any[]>([]);
