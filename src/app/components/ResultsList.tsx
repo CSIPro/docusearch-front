@@ -1,6 +1,5 @@
+import { BASE_URL } from "@/utils/constants";
 import React, { useState } from "react";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
 
 interface Result {
   file_name: string;
@@ -24,7 +23,9 @@ const highlightTerms = (text: string, query: string) => {
     <>
       {parts.map((part, index) =>
         terms.some((term) => part.toLowerCase() === term.toLowerCase()) ? (
-          <mark key={index} className="bg-yellow-300 px-1 rounded">{part}</mark>
+          <mark key={index} className="bg-yellow-300 px-1 rounded">
+            {part}
+          </mark>
         ) : (
           part
         )
@@ -39,7 +40,8 @@ const ResultsList: React.FC<ResultsListProps> = ({ results, searchQuery }) => {
   if (!results || !results.length) {
     return (
       <p className="text-gray-600 text-center mt-4 px-4">
-        No se encontraron resultados para "<span className="font-semibold">{searchQuery}</span>".
+        No se encontraron resultados para &quot;
+        <span className="font-semibold">{searchQuery}</span>&quot;.
       </p>
     );
   }
@@ -54,7 +56,9 @@ const ResultsList: React.FC<ResultsListProps> = ({ results, searchQuery }) => {
             onClick={() => setSelected(`${BASE_URL}/view/${result.file_name}`)}
           >
             {/* File Name */}
-            <h2 className="font-semibold text-base sm:text-lg text-gray-900">{result.file_name}</h2>
+            <h2 className="font-semibold text-base sm:text-lg text-gray-900">
+              {result.file_name}
+            </h2>
 
             {/* Snippet */}
             <p className="text-gray-700 text-sm mt-2 leading-relaxed">
@@ -90,7 +94,9 @@ const ResultsList: React.FC<ResultsListProps> = ({ results, searchQuery }) => {
 
             {/* Encabezado */}
             <div className="p-3 sm:p-4 border-b bg-gray-100 flex justify-between items-center">
-              <h3 className="text-sm sm:text-lg font-semibold text-gray-800">Vista previa del documento</h3>
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-800">
+                Vista previa del documento
+              </h3>
             </div>
 
             {/* Contenedor del PDF */}
@@ -104,7 +110,7 @@ const ResultsList: React.FC<ResultsListProps> = ({ results, searchQuery }) => {
                 Si tienes problemas, intenta descargar el archivo.
               </span>
               <a
-                href={selected.replace('/view/', '/download/')}
+                href={selected.replace("/view/", "/download/")}
                 download
                 className="mt-2 sm:mt-0 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition text-sm sm:text-base"
               >

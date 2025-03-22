@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { FunnelIcon } from "@heroicons/react/24/solid";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
+import { BASE_URL } from "@/utils/constants";
 
 interface SearchBarProps {
   onSearch: (query: string, startDate: string, endDate: string, exactMatch: boolean) => void;

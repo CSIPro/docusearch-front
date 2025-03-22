@@ -5,8 +5,7 @@ import axios from "axios";
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import Pagination from "./components/Pagination";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
+import { ASSETS_PREFIX, BASE_URL } from "@/utils/constants";
 
 export default function Page() {
   const [isClient, setIsClient] = useState(false); // ✅ Track client readiness
@@ -80,7 +79,7 @@ export default function Page() {
       {/* Search Bar Section */}
       <div className="w-full max-w-3xl text-center flex items-center justify-center">
         <img
-          src="/docusearch/unisonlogo.gif"
+          src={`${ASSETS_PREFIX}/unisonlogo.gif`}
           alt="Logo"
           className="h-36 mb-8 mr-4"
         />
