@@ -6,7 +6,7 @@ import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import Pagination from "./components/Pagination";
 
-export const BASE_URL = process.env.PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
 
 export default function Page() {
   const [isClient, setIsClient] = useState(false); // ✅ Track client readiness
@@ -19,12 +19,18 @@ export default function Page() {
   const [exactMatch, setExactMatch] = useState<boolean>(false);
 
   const latestRequestTimestamp = useRef<number>(0);
-  
+
   useEffect(() => {
     setIsClient(true); // ✅ Set to true when component is mounted
   }, []);
 
-  const fetchResults = async (query: string, startDate: string = "", endDate: string = "", page: number = 1, exactMatch: boolean = false) => {
+  const fetchResults = async (
+    query: string,
+    startDate: string = "",
+    endDate: string = "",
+    page: number = 1,
+    exactMatch: boolean = false
+  ) => {
     if (!query && (!startDate || !endDate)) return;
 
     const currentTimestamp = Date.now();
@@ -32,7 +38,14 @@ export default function Page() {
 
     try {
       const response = await axios.get(`${BASE_URL}/search`, {
-        params: { query, exact_match: exactMatch, start_date: startDate || undefined, end_date: endDate || undefined, page, page_size: 10 },
+        params: {
+          query,
+          exact_match: exactMatch,
+          start_date: startDate || undefined,
+          end_date: endDate || undefined,
+          page,
+          page_size: 10,
+        },
       });
       const data = response.data as { results: any[]; total_results: number };
 
@@ -66,9 +79,13 @@ export default function Page() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       {/* Search Bar Section */}
       <div className="w-full max-w-3xl text-center flex items-center justify-center">
-        <img src="/unisonlogo.gif" alt="Logo" className="h-36 mb-8 mr-4" />
-        <h1 
-          onClick={resetSearch} 
+        <img
+          src="/docusearch/unisonlogo.gif"
+          alt="Logo"
+          className="h-36 mb-8 mr-4"
+        />
+        <h1
+          onClick={resetSearch}
           className="text-7xl font-extrabold bg-gradient-to-r from-red-600 via-yellow-400 to-blue-800 bg-clip-text text-transparent mb-6 cursor-pointer transition-all hover:opacity-80"
         >
           UniSearch
@@ -92,7 +109,13 @@ export default function Page() {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={(page) =>
-              fetchResults(searchQuery, startDate || "", endDate || "", page, exactMatch)
+              fetchResults(
+                searchQuery,
+                startDate || "",
+                endDate || "",
+                page,
+                exactMatch
+              )
             }
           />
         </div>

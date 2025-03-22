@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { FunnelIcon } from "@heroicons/react/24/solid";
-import { BASE_URL } from "../page"; // Ensure this points to your FastAPI backend
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000"; // Fetch from env or default
 
 interface SearchBarProps {
   onSearch: (query: string, startDate: string, endDate: string, exactMatch: boolean) => void;
