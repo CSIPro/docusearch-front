@@ -42,4 +42,4 @@ jobs:
 
       - name: SSH into production, install dependencies, and deploy
         run: |
-          ssh unison-isi "cd /var/www/docusearch && npm ci && npm run build && pm2 reload docusearch"
+          ssh unison-isi "nvm use default && cd /var/www/docusearch && npm ci && npm run build && pm2 reload docusearch"
